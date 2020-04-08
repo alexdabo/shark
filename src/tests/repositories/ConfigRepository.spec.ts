@@ -2,8 +2,8 @@ import { expect } from 'chai'
 import * as path from 'path'
 import * as os from 'os'
 import * as fs from 'fs'
-import ConfigRepository from '../repositories/ConfigRepository'
-import { ConfigModel } from '../models/DBModel'
+import ConfigRepository from '../../repositories/ConfigRepository'
+import { ConfigModel } from '../../models/DBModel'
 
 // Create config folder
 // Configuration data is stored in this folder

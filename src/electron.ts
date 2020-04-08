@@ -54,8 +54,12 @@ app.on('activate', () => {
   }
 })
 
-// In this file you can include the rest of your app"s specific main process
-// code. You can also put them in separate files and require them here.
+// Create tmp folder
+// Compressed files are created in this folder for subsequent downloading
+const tmpdir = path.join(os.tmpdir(), 'shark')
+if (!fs.existsSync(tmpdir)) {
+  fs.mkdirSync(tmpdir)
+}
 
 // Create config folder
 // Configuration data is stored in this folder

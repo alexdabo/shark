@@ -2,7 +2,7 @@ import { expect } from 'chai'
 import * as path from 'path'
 import * as os from 'os'
 import * as fs from 'fs'
-import FileIconRepository from '../repositories/FileIconRepository'
+import FileIconRepository from '../../repositories/FileIconRepository'
 
 // Create config folder
 // Configuration data is stored in this folder
@@ -22,7 +22,10 @@ describe('FileIconRepository', () => {
   it('Load without mine', (done) => {
     const repo: FileIconRepository = new FileIconRepository()
     repo.findByMine().then((result) => {
-      expect(result).to.contain({ mine: '*', icon: 'undefined/public/fileicon/file.svg' })
+      expect(result).to.contain({
+        mine: '*',
+        icon: `${process.env.DOMAIN}/public/fileicon/file.svg`,
+      })
     })
     done()
   })
@@ -30,7 +33,10 @@ describe('FileIconRepository', () => {
   it('Load with mine image/png', (done) => {
     const repo: FileIconRepository = new FileIconRepository()
     repo.findByMine('image/png').then((result) => {
-      expect(result).to.contain({ mine: 'image/*', icon: 'undefined/public/fileicon/image.svg' })
+      expect(result).to.contain({
+        mine: 'image/*',
+        icon: `${process.env.DOMAIN}/public/fileicon/image.svg`,
+      })
     })
     done()
   })

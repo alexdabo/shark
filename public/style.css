@@ -1,0 +1,61 @@
+body {                               
+    -webkit-user-select: none; 
+}
+  
+label{
+    color: gray;
+}
+.primary, .btn-primary{
+    background-color: #0097fc!important;
+    color: #ffffff;
+}
+
+.btn-primary{
+    border-color: #0097fc!important;
+}
+
+/********************************************************
+*                       TextField                       *
+*********************************************************/
+.input-container {
+    border: 2px solid #d0d0d0;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    padding: 0px 5px;
+  }
+
+.input-container legend {
+    padding-inline: 10px;
+    margin: 0px 10px;
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 1em;
+    width: auto;
+}
+
+.input-container input {
+    padding: 1px 15px;
+    margin-bottom: 2px;
+    border: none;
+    width: 100%;
+}
+
+.input-container:focus-within {
+    border-color: rgba(0, 150, 250, 0.9);
+}
+
+.input-container:focus-within>legend,
+.input-container:focus-within>input {
+    color: rgba(0, 150, 250, 0.9);
+}
+
+
+
+.input-container:disabled>input,
+.input-container:disabled>legend {
+    color: #8b8b8b;
+    background-color: #fff;
+}
+
+.input-container input:focus {
+    outline-width: 0px;
+}

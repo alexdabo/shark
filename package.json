@@ -27,7 +27,10 @@
     "ip": "^1.1.5",
     "lowdb": "^1.0.0",
     "mime-types": "^2.1.26",
-    "multer": "^1.4.2"
+    "multer": "^1.4.2",
+    "portscanner": "^2.2.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
   },
   "devDependencies": {
     "@types/body-parser": "^1.19.0",
@@ -41,6 +44,9 @@
     "@types/mime-types": "^2.1.0",
     "@types/mocha": "^7.0.2",
     "@types/multer": "^1.4.2",
+    "@types/portscanner": "^2.1.0",
+    "@types/react": "^16.9.33",
+    "@types/react-dom": "^16.9.6",
     "@types/supertest": "^2.0.8",
     "chai": "^4.2.0",
     "electron": "^6.0.8",

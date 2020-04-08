@@ -6,6 +6,7 @@
     "sourceMap": true,
     "outDir": "build",
     "baseUrl": ".",
+    "jsx": "react",
     "paths": {
       "*": ["node_modules/*"]
     }

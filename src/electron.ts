@@ -1,35 +1,17 @@
 import { app } from 'electron'
-import { BrowserWindow } from 'electron'
 import * as path from 'path'
 import * as os from 'os'
 import * as fs from 'fs'
+import MainWindow, { Menu } from './ui/windows/MainWindow'
 
-console.log(path.join(__dirname, 'hola'))
 let mainWindow: Electron.BrowserWindow
 
 function createWindow() {
   // Create the browser window.
-  mainWindow = new BrowserWindow({
-    height: 600,
-    webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
-    },
-    width: 800,
-  })
+  mainWindow = MainWindow()
 
-  // and load the index.html of the app.
-  mainWindow.loadFile(path.join(__dirname, '../public/index.html'))
-
-  // Open the DevTools.
-  mainWindow.webContents.openDevTools()
-
-  // Emitted when the window is closed.
-  mainWindow.on('closed', () => {
-    // Dereference the window object, usually you would store windows
-    // in an array if your app supports multi windows, this is the time
-    // when you should delete the corresponding element.
-    mainWindow = null
-  })
+  // set menu
+  app.applicationMenu = Menu(app, mainWindow)
 }
 
 // This method will be called when Electron has finished

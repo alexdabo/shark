@@ -9,9 +9,12 @@
   "main": "build/electron.js",
   "scripts": {
     "start": "tsc && electron ./build/electron.js",
-    "dev": "tsc -w & electron ./build/electron.js",
-    "format": "prettier --write \"src/**/*\"",
-    "test": "mocha"
+    "dev:electron": "tsc -w & electron ./build/electron.js",
+    "dev:web":"npm start & cd client && npm start",
+    "test:electron": "mocha",
+    "test:web":"cd client && npm run test",
+    "test": "mocha && npm run test:web",
+    "format": "prettier --write \"{src/**/*,client/src/**/*}.{ts,tsx,css,json}\""
   },
   "keywords": [
     "Electron",

@@ -1,6 +1,8 @@
 import { app } from 'electron'
 import { BrowserWindow } from 'electron'
 import * as path from 'path'
+import * as os from 'os'
+import * as fs from 'fs'
 
 console.log(path.join(__dirname, 'hola'))
 let mainWindow: Electron.BrowserWindow
@@ -54,3 +56,22 @@ app.on('activate', () => {
 
 // In this file you can include the rest of your app"s specific main process
 // code. You can also put them in separate files and require them here.
+
+// Create config folder
+// Configuration data is stored in this folder
+const configdir = path.join(os.homedir(), '.shark')
+if (!fs.existsSync(configdir)) {
+  fs.mkdirSync(configdir)
+}
+
+// Create fileicons folder
+// file icons are stored here
+const fileIconsDestination = path.join(os.homedir(), '.shark', 'fileicons')
+const fileIconsOrigin = path.join(__dirname, '../public/fileicons')
+if (!fs.existsSync(fileIconsDestination)) {
+  fs.mkdirSync(fileIconsDestination)
+  const files = fs.readdirSync(fileIconsOrigin)
+  files.forEach((file) => {
+    fs.copyFileSync(path.join(fileIconsOrigin, file), path.join(fileIconsDestination, file))
+  })
+}

@@ -17,9 +17,12 @@
     "Electron",
     "typescript"
   ],
-  "dependencies": {},
+  "dependencies": {
+    "lowdb": "^1.0.0"
+  },
   "devDependencies": {
     "@types/chai": "^4.2.11",
+    "@types/lowdb": "^1.0.9",
     "@types/mocha": "^7.0.2",
     "chai": "^4.2.0",
     "electron": "^6.0.8",

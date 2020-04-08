@@ -1,0 +1,24 @@
+{
+  "name": "shark",
+  "version": "1.0.0-Alpha",
+  "author": "perdiz <adbonilla.ad@gmail.com>",
+  "license": "MIT",
+  "description": "Make your computer your personal cloud.",
+  "copyright": "Copyright © 2020 perdiz",
+  "repository": "https://github.com/alexdabo/shark.git",
+  "main": "build/electron.js",
+  "scripts": {
+    "start": "tsc && electron ./build/electron.js",
+    "dev": "tsc -w & electron ./build/electron.js",
+    "format": "prettier --write \"src/**/*\""
+  },
+  "keywords": [
+    "Electron",
+    "typescript"
+  ],
+  "devDependencies": {
+    "electron": "^6.0.8",
+    "prettier": "2.0.2",
+    "typescript": "^3.6.0"
+  }
+}

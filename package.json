@@ -10,9 +10,9 @@
   "scripts": {
     "start": "tsc && electron ./build/electron.js",
     "dev:electron": "tsc -w & electron ./build/electron.js",
-    "dev:web":"npm start & cd client && npm start",
+    "dev:web": "npm start & cd client && npm start",
     "test:electron": "mocha",
-    "test:web":"cd client && npm run test",
+    "test:web": "cd client && npm run test",
     "test": "mocha && npm run test:web",
     "format": "prettier --write \"{src/**/*,client/src/**/*}.{ts,tsx,css,json}\""
   },
@@ -30,6 +30,7 @@
     "ip": "^1.1.5",
     "lowdb": "^1.0.0",
     "mime-types": "^2.1.26",
+    "moment": "^2.24.0",
     "multer": "^1.4.2",
     "portscanner": "^2.2.0",
     "react": "^16.13.1",

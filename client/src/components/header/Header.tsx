@@ -40,7 +40,7 @@ export default (props: Props): JSX.Element => {
   }
 
   return (
-    <Box boxShadow={5}>
+    <Box>
       <AppBar color="primary" position="relative" elevation={1}>
         <Toolbar>
           <Grid container spacing={1} alignItems="center">

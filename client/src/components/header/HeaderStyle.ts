@@ -51,5 +51,8 @@ export default makeStyles((theme: Theme) =>
       color: fade(theme.palette.common.white, 1),
       flex: 1,
     },
+    iconBtn: {
+      color: fade(theme.palette.common.white, 1),
+    },
   })
 )

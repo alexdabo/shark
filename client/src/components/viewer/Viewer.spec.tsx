@@ -221,7 +221,7 @@ describe('<Viewer view="grid"/>', () => {
         files={files}
         search=""
         onDeleteFile={(file) => {
-          expect(file).toBe(files[5].url)
+          expect(file).toBe(files[5])
           done()
         }}
       ></Viewer>

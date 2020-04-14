@@ -1,4 +1,5 @@
 export { default as Alert } from './alert/Alert'
+export type { AlertOptions } from './alert/Alert'
 export { default as Downloader } from './downloader/Downloader'
 export { default as Fab } from './fab/Fab'
 export { default as Header } from './header/Header'

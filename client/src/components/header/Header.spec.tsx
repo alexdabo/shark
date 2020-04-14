@@ -9,9 +9,7 @@ describe('<Header/>', () => {
   afterEach(cleanup)
 
   it('Should render correctly', (done) => {
-    const { getByText } = render(
-      <Header directory="/test" hostname="" search="" onChange={() => {}} onSearch={() => {}} />
-    )
+    const { getByText } = render(<Header view="grid" directory="/test" hostname="" search="" />)
     expect(getByText(/test/i)).toBeInTheDocument()
     done()
   })
@@ -22,7 +20,7 @@ describe('<Header/>', () => {
         directory=""
         hostname=""
         search=""
-        onChange={() => {}}
+        view="grid"
         onSearch={(value) => {
           expect(value).toBe('my folder')
           done()
@@ -31,7 +29,6 @@ describe('<Header/>', () => {
     )
 
     fireEvent.input(getByPlaceholderText('Search...'), { target: { value: 'my folder' } })
-    done()
   })
 
   it('Should clean search string', (done) => {
@@ -40,7 +37,7 @@ describe('<Header/>', () => {
         directory=""
         hostname=""
         search="my folder"
-        onChange={() => {}}
+        view="grid"
         onSearch={(value) => {
           expect(value).toBe('')
           done()
@@ -49,7 +46,6 @@ describe('<Header/>', () => {
     )
 
     fireEvent.click(getByTestId('clear-search'))
-    done()
   })
 
   it('Should go back one folder', (done) => {
@@ -58,7 +54,8 @@ describe('<Header/>', () => {
         directory="/folder1/folder2/folder3"
         hostname=""
         search=""
-        onChange={(value) => {
+        view="grid"
+        onChangeDirectory={(value) => {
           expect(value).toBe('/folder1/folder2')
           done()
         }}

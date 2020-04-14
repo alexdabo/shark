@@ -1,5 +1,6 @@
 import React from 'react'
 import { Hidden } from '@material-ui/core'
+import { IconButton } from '@material-ui/core'
 import { CardHeader } from '@material-ui/core'
 import { AppBar } from '@material-ui/core'
 import { Avatar } from '@material-ui/core'
@@ -11,7 +12,10 @@ import { Link } from '@material-ui/core'
 import { InputBase } from '@material-ui/core'
 import SearchIcon from '@material-ui/icons/Search'
 import HomeIcon from '@material-ui/icons/Home'
+import ListIcon from '@material-ui/icons/ViewList'
+import GridIcon from '@material-ui/icons/ViewModule'
 import ClearIcon from '@material-ui/icons/Clear'
+import RefreshIcon from '@material-ui/icons/Refresh'
 import { Typography } from '@material-ui/core'
 import styles from './HeaderStyle'
 
@@ -19,13 +23,16 @@ interface Props {
   directory: string
   hostname: string
   search: string
-  onChange: (directory: string) => void
-  onSearch: (search: string) => void
+  view: 'list' | 'grid'
+  onChangeView?: (view: 'list' | 'grid') => void
+  onChangeDirectory?: (directory: string) => void
+  onSearch?: (search: string) => void
+  onRefresh?: (directory: string) => void
 }
 
 export default (props: Props): JSX.Element => {
   const classes = styles()
-  const { directory, hostname, search } = props
+  const { directory, hostname, search, view } = props
 
   const directories = (): string[] => {
     let directories: string[] = []
@@ -67,7 +74,7 @@ export default (props: Props): JSX.Element => {
             <Grid item>
               <div className={classes.searchRoot} style={{}}>
                 <InputBase
-                  onChange={(event) => props.onSearch(event.target.value)}
+                  onChange={(event) => (props.onSearch ? props.onSearch(event.target.value) : null)}
                   value={search}
                   className={classes.searchInput}
                   placeholder="Search..."
@@ -76,33 +83,62 @@ export default (props: Props): JSX.Element => {
                 {search.length === 0 ? (
                   <SearchIcon />
                 ) : (
-                  <ClearIcon data-testid="clear-search" onClick={() => props.onSearch('')} />
+                  <ClearIcon
+                    data-testid="clear-search"
+                    onClick={() => (props.onSearch ? props.onSearch('') : null)}
+                  />
                 )}
               </div>
             </Grid>
+            <Hidden xsDown>
+              <Grid item>
+                {view === 'list' ? (
+                  <IconButton
+                    onClick={() => (props.onChangeView ? props.onChangeView('grid') : null)}
+                    className={classes.iconBtn}
+                  >
+                    <GridIcon />
+                  </IconButton>
+                ) : (
+                  <IconButton
+                    onClick={() => (props.onChangeView ? props.onChangeView('list') : null)}
+                    className={classes.iconBtn}
+                  >
+                    <ListIcon />
+                  </IconButton>
+                )}
+              </Grid>
+            </Hidden>
+            <Hidden xsDown>
+              <Grid item>
+                <IconButton
+                  onClick={() => (props.onRefresh ? props.onRefresh(directory) : null)}
+                  className={classes.iconBtn}
+                >
+                  <RefreshIcon />
+                </IconButton>
+              </Grid>
+            </Hidden>
           </Grid>
         </Toolbar>
 
         <Toolbar variant="dense" className={classes.breadcrumbContainer}>
           <Breadcrumbs className={classes.breadcrumb} aria-label="breadcrumb">
             <Link
-              onClick={() => {
-                props.onChange('/')
-              }}
+              onClick={() => (props.onChangeDirectory ? props.onChangeDirectory('/') : null)}
               className={classes.link}
             >
               <HomeIcon className={classes.icon} /> Home{' '}
             </Link>
             {directories().map((directory: string) => (
               <Link
-                // for testing
                 data-testid={`dir-${directory.split('/').pop()}`}
                 className={classes.link}
                 key={directory}
                 color="inherit"
-                onClick={() => {
-                  props.onChange(directory)
-                }}
+                onClick={() =>
+                  props.onChangeDirectory ? props.onChangeDirectory(directory) : null
+                }
               >
                 {directory.split('/').pop()}
               </Link>

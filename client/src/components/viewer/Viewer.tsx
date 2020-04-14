@@ -33,7 +33,7 @@ interface Props extends WithStyles<typeof styles> {
   onSelectedFolder?: (directory: string) => void
   onDownloadFile?: (url: string) => void
   onDownloadFolder?: (directory: string) => void
-  onDeleteFile?: (url: string) => void
+  onDeleteFile?: (selected: FileModel) => void
 }
 
 interface State {
@@ -71,7 +71,7 @@ class Viewer extends Component<Props, State> {
     if (this.props.onDownloadFile && eventName === 'download')
       this.props.onDownloadFile(this.state.selectedFile.url)
     if (this.props.onDeleteFile && eventName === 'delete')
-      this.props.onDeleteFile(this.state.selectedFile.url)
+      this.props.onDeleteFile(this.state.selectedFile)
     this.setState({ openFI: false })
   }
 

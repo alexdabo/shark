@@ -1,19 +1,30 @@
 import React from 'react'
-import Grid from '@material-ui/core/Grid'
+import { Component } from 'react'
+import { MuiThemeProvider } from '@material-ui/core'
+import { createMuiTheme } from '@material-ui/core'
+import { Theme } from '@material-ui/core'
+import { BrowserRouter } from 'react-router-dom'
+import { Route } from 'react-router-dom'
+import { Switch } from 'react-router-dom'
+import ManagerView from './manage/Manager'
 
-function App() {
-  return (
-    <Grid
-      className="root"
-      container
-      direction="row"
-      justify="center"
-      alignItems="center"
-      style={{ height: '100vh' }}
-    >
-      <h1>shark</h1>
-    </Grid>
-  )
+const theme: Theme = createMuiTheme({
+  palette: {
+    primary: { main: '#0097fc' },
+    secondary: { main: '#19b4fc' },
+  },
+})
+
+export default class App extends Component {
+  public render() {
+    return (
+      <MuiThemeProvider theme={theme}>
+        <BrowserRouter>
+          <Switch>
+            <Route path="/:dir?" component={ManagerView} />
+          </Switch>
+        </BrowserRouter>
+      </MuiThemeProvider>
+    )
+  }
 }
-
-export default App

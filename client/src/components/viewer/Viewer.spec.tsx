@@ -3,7 +3,8 @@ import { render } from '@testing-library/react'
 import { cleanup } from '@testing-library/react'
 import { fireEvent } from '@testing-library/react'
 import Viewer from './Viewer'
-import FileModel from '../../models/FileModel'
+import { folders } from '../../test'
+import { files } from '../../test'
 
 describe('<Viewer/>', () => {
   afterEach(cleanup)
@@ -35,7 +36,8 @@ describe('<Viewer view="list"/>', () => {
     )
     const tableBody = getByTestId('table-body')
     expect(tableBody).toBeInTheDocument
-    expect(tableBody.children.length).toBe(9)
+    // 3 folders and 5 files
+    expect(tableBody.children.length).toBe(8)
     done()
   })
 
@@ -69,7 +71,7 @@ describe('<Viewer view="list"/>', () => {
         files={files}
         search=""
         onSelectedFile={(file) => {
-          expect(file).toBe(files[5])
+          expect(file).toBe(files[3])
           done()
         }}
       ></Viewer>
@@ -107,7 +109,7 @@ describe('<Viewer view="grid"/>', () => {
     )
     const grid = getByTestId('grid')
     expect(grid).toBeInTheDocument
-    expect(grid.children.length).toBe(10)
+    expect(grid.children.length).toBe(9)
     done()
   })
 
@@ -141,7 +143,7 @@ describe('<Viewer view="grid"/>', () => {
         files={files}
         search=""
         onSelectedFile={(file) => {
-          expect(file).toBe(files[5])
+          expect(file).toBe(files[3])
           done()
         }}
       ></Viewer>
@@ -199,7 +201,7 @@ describe('<Viewer view="grid"/>', () => {
         files={files}
         search=""
         onDownloadFile={(file) => {
-          expect(file).toBe(files[5].url)
+          expect(file).toBe(files[3].url)
           done()
         }}
       ></Viewer>
@@ -221,7 +223,7 @@ describe('<Viewer view="grid"/>', () => {
         files={files}
         search=""
         onDeleteFile={(file) => {
-          expect(file).toBe(files[5])
+          expect(file).toBe(files[3])
           done()
         }}
       ></Viewer>
@@ -239,67 +241,3 @@ describe('<Viewer view="grid"/>', () => {
     fireEvent.click(deleteConfirm)
   })
 })
-
-const folders: string[] = ['/test/test1', '/test/test2', '/test/test3']
-const files: FileModel[] = [
-  {
-    url: 'http://localhost:8000/public/test/book.pdf',
-    icon: 'http://localhost:8000/public/fileicon/pdf.svg',
-    name: 'book.pdf',
-    mine: 'application/pdf',
-    ext: '.pdf',
-    size: 107613,
-    accessedAt: '2020-04-07T16:52:15.295Z',
-    modifiedAt: '2020-04-07T16:52:38.135Z',
-  },
-  {
-    url: 'http://localhost:8000/public/test/movie.mkv',
-    icon: 'http://localhost:8000/public/fileicon/video.svg',
-    name: 'movie.mkv',
-    mine: 'video/x-matroska',
-    ext: '.mkv',
-    size: 170245006,
-    accessedAt: '2020-04-07T16:52:15.785Z',
-    modifiedAt: '2020-04-07T16:53:58.746Z',
-  },
-  {
-    url: 'http://localhost:8000/public/test/ms-document.docx',
-    icon: 'http://localhost:8000/public/fileicon/ms_word.svg',
-    name: 'ms-document.docx',
-    mine: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-    ext: '.docx',
-    size: 76536,
-    accessedAt: '2020-04-07T16:52:15.385Z',
-    modifiedAt: '2020-04-07T16:54:15.546Z',
-  },
-  {
-    url: 'http://localhost:8000/public/test/ms-presentation.pptx',
-    icon: 'http://localhost:8000/public/fileicon/ms_powerpoint.svg',
-    name: 'ms-presentation.pptx',
-    mine: 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
-    ext: '.pptx',
-    size: 1800680,
-    accessedAt: '2020-04-07T16:52:15.315Z',
-    modifiedAt: '2020-04-07T16:53:41.026Z',
-  },
-  {
-    url: 'http://localhost:8000/public/test/ms-sheet.xlsx',
-    icon: 'http://localhost:8000/public/fileicon/ms_excel.svg',
-    name: 'ms-sheet.xlsx',
-    mine: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-    ext: '.xlsx',
-    size: 36819,
-    accessedAt: '2020-04-07T16:52:15.415Z',
-    modifiedAt: '2020-04-07T16:53:17.846Z',
-  },
-  {
-    url: 'http://localhost:8000/public/test/picture.jpg',
-    icon: 'http://localhost:8000/public/fileicon/image.svg',
-    name: 'picture.jpg',
-    mine: 'image/jpeg',
-    ext: '.jpg',
-    size: 131072,
-    accessedAt: '2020-04-07T16:52:15.315Z',
-    modifiedAt: '2020-04-07T16:53:48.056Z',
-  },
-]

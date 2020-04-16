@@ -3,7 +3,8 @@ import { History } from 'history'
 import { Component } from 'react'
 import { Color as AlertType } from '@material-ui/lab/Alert'
 import { Panel } from '../../components'
-import { Header } from '../../components'
+import { Preview } from '../../components'
+import { Navigation } from '../../components'
 import { Viewer } from '../../components'
 import { Alert, AlertOptions } from '../../components'
 import { Skeleton } from '../../components'
@@ -34,7 +35,9 @@ interface State {
   // all files
   files: FileModel[]
   // file selected
-  file: FileModel | {}
+  file: FileModel
+  // File preview
+  openFP: boolean
   //alert
   alert: AlertOptions
 }
@@ -49,7 +52,9 @@ export default class MainView extends Component<Props, State> {
     search: '',
     folders: [],
     files: [],
+    // @ts-ignore
     file: {},
+    openFP: false,
     alert: {},
   }
 
@@ -138,6 +143,17 @@ export default class MainView extends Component<Props, State> {
     this.setState({ alert: { show: true, type, message, persistent, loading } })
   }
 
+  private navigateFiles(nav: 'before' | 'next'): void {
+    const { files, file } = this.state
+    const currentFileIndex: number = files.indexOf(file)
+
+    if (nav === 'next') {
+      if (currentFileIndex < files.length - 1) this.setState({ file: files[currentFileIndex + 1] })
+    } else {
+      if (currentFileIndex > 0) this.setState({ file: files[currentFileIndex - 1] })
+    }
+  }
+
   // React
 
   public componentDidMount(): void {
@@ -147,11 +163,11 @@ export default class MainView extends Component<Props, State> {
 
   public render() {
     const { app, loading, directory, search, folders } = this.state
-    const { view, alert, files } = this.state
+    const { view, alert, files, openFP, file } = this.state
     return (
       <Panel
         header={
-          <Header
+          <Navigation
             directory={directory}
             hostname={app.hostname}
             search={search}
@@ -172,11 +188,21 @@ export default class MainView extends Component<Props, State> {
             folders={folders}
             files={files}
             onSelectedFolder={(value) => this.props.history?.push(value)}
+            onSelectedFile={(value) => this.setState({ openFP: true, file: value })}
             onDownloadFolder={(value) => this.downloadFolder(value)}
             onDownloadFile={(value) => this.downloadFile(value)}
             onDeleteFile={(value) => this.deleteFile(value)}
           />
         )}
+
+        <Preview
+          open={openFP}
+          file={file}
+          onClose={() => this.setState({ openFP: false })}
+          onDownload={(value) => this.downloadFile(value)}
+          onNavigate={(value) => this.navigateFiles(value)}
+        />
+
         <Alert options={alert} onClose={() => this.setState({ alert: { show: false } })} />
       </Panel>
     )

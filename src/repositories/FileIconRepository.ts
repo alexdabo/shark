@@ -3,27 +3,27 @@ import FileModel from '../models/FileModel'
 import { FileIconModel } from '../models/DBModel'
 
 export default class FileIconRepository extends Repository {
-  public async findByMine(mine?: string): Promise<FileIconModel> {
+  public async findOne(file: FileModel): Promise<FileModel> {
     let icons: FileIconModel[] = await this.db.get('fileIcons').value()
     let fileIcon: FileIconModel = icons.find((fileicon) => fileicon.mine === '*')
 
-    if (mine) {
+    if (file.mine) {
       icons = icons
         // filter type
         .filter((result) => {
-          return result.mine.split('/')[0] === mine.split('/')[0]
+          return result.mine.split('/')[0] === file.mine.split('/')[0]
         })
         // filter extension
         .filter((result) => {
           return (
-            result.mine.split('/').pop() === mine.split('/').pop() ||
+            result.mine.split('/').pop() === file.mine.split('/').pop() ||
             result.mine.split('/').pop() === '*'
           )
         })
       fileIcon = icons[0] || fileIcon
     }
-    fileIcon.icon = fileIcon.icon.replace('@/', `${process.env.DOMAIN}/public/fileicon/`)
-    return fileIcon
+    file.icon = fileIcon.icon.replace('@/', `${process.env.DOMAIN}/public/fileicon/`)
+    return file
   }
 
   public async findForAll(files: FileModel[]): Promise<FileModel[]> {

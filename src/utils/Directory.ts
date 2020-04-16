@@ -107,8 +107,8 @@ export default {
     return destination
   },
 
-  fileProps: (directory: string): FileModel => {
-    return fileProps(directory)
+  fileProps: async (directory: string): Promise<FileModel> => {
+    return await new FileIconRepository().findOne(fileProps(directory))
   },
 
   readFiles: async (directory: string): Promise<FileModel[]> => {

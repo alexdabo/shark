@@ -24,7 +24,7 @@ export default (props: Props): JSX.Element => {
         />
       }
     >
-      <iframe className={classes.pdfViewer} src={file.url} scrolling="no" />
+      <iframe title="pdf-viewer" className={classes.pdfViewer} src={file.url} scrolling="no" />
     </Panel>
   )
 }

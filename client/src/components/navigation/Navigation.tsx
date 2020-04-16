@@ -16,6 +16,8 @@ import ListIcon from '@material-ui/icons/ViewList'
 import GridIcon from '@material-ui/icons/ViewModule'
 import ClearIcon from '@material-ui/icons/Clear'
 import RefreshIcon from '@material-ui/icons/Refresh'
+import FolderIcon from '@material-ui/icons/Folder'
+import UploadIcon from '@material-ui/icons/CloudUpload'
 import { Typography } from '@material-ui/core'
 import styles from './NavigationStyle'
 
@@ -28,6 +30,8 @@ interface Props {
   onChangeDirectory?: (directory: string) => void
   onSearch?: (search: string) => void
   onRefresh?: (directory: string) => void
+  onCreateFolder?: () => void
+  onUpload?: () => void
 }
 
 export default (props: Props): JSX.Element => {
@@ -72,7 +76,7 @@ export default (props: Props): JSX.Element => {
               <Grid item xs />
             </Hidden>
             <Grid item>
-              <div className={classes.searchRoot} style={{}}>
+              <div className={classes.searchRoot}>
                 <InputBase
                   onChange={(event) => (props.onSearch ? props.onSearch(event.target.value) : null)}
                   value={search}
@@ -107,16 +111,26 @@ export default (props: Props): JSX.Element => {
                     <ListIcon />
                   </IconButton>
                 )}
-              </Grid>
-            </Hidden>
-            <Hidden xsDown>
-              <Grid item>
-                <IconButton
-                  onClick={() => (props.onRefresh ? props.onRefresh(directory) : null)}
-                  className={classes.iconBtn}
-                >
-                  <RefreshIcon />
-                </IconButton>
+
+                {props.onUpload ? (
+                  <IconButton onClick={props.onUpload} className={classes.iconBtn}>
+                    <UploadIcon />
+                  </IconButton>
+                ) : null}
+
+                {props.onCreateFolder ? (
+                  <IconButton onClick={props.onCreateFolder} className={classes.iconBtn}>
+                    <FolderIcon />
+                  </IconButton>
+                ) : null}
+                {props.onRefresh ? (
+                  <IconButton
+                    onClick={() => (props.onRefresh ? props.onRefresh(directory) : null)}
+                    className={classes.iconBtn}
+                  >
+                    <RefreshIcon />
+                  </IconButton>
+                ) : null}
               </Grid>
             </Hidden>
           </Grid>

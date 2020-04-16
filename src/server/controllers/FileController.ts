@@ -32,12 +32,12 @@ router.post('/', (req: Request, res: Response) => {
   })
 
   var upload = multer({ storage: storage }).single('file')
-  upload(req, res, function (err) {
+  upload(req, res, async function (err) {
     if (err) {
       return res.end('Error uploading file.')
     }
 
-    res.send(dir.fileProps(req.body.path))
+    res.send(await dir.fileProps(req.body.path))
   })
 })
 

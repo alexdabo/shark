@@ -8,6 +8,7 @@ import { Navigation } from '../../components'
 import { Viewer } from '../../components'
 import { Alert, AlertOptions } from '../../components'
 import { Skeleton } from '../../components'
+import { Uploader } from '../../components'
 import { AppModel } from '../../models'
 import { DirectoryModel } from '../../models'
 import { FileModel } from '../../models'
@@ -36,6 +37,8 @@ interface State {
   files: FileModel[]
   // file selected
   file: FileModel
+  //Uploader
+  openFU: boolean
   // File preview
   openFP: boolean
   //alert
@@ -54,6 +57,7 @@ export default class MainView extends Component<Props, State> {
     files: [],
     // @ts-ignore
     file: {},
+    openFU: false,
     openFP: false,
     alert: {},
   }
@@ -142,7 +146,11 @@ export default class MainView extends Component<Props, State> {
   private alert(type: AlertType, message: string, persistent?: boolean, loading?: boolean): void {
     this.setState({ alert: { show: true, type, message, persistent, loading } })
   }
-
+  private onUploaded(files: FileModel[]): void {
+    let stateFiles = this.state.files
+    files.forEach((file) => stateFiles.push(file))
+    this.setState({ openFU: false, files: stateFiles })
+  }
   private navigateFiles(nav: 'before' | 'next'): void {
     const { files, file } = this.state
     const currentFileIndex: number = files.indexOf(file)
@@ -163,7 +171,7 @@ export default class MainView extends Component<Props, State> {
 
   public render() {
     const { app, loading, directory, search, folders } = this.state
-    const { view, alert, files, openFP, file } = this.state
+    const { view, alert, files, openFP, openFU, file } = this.state
     return (
       <Panel
         header={
@@ -176,8 +184,10 @@ export default class MainView extends Component<Props, State> {
             onChangeDirectory={(value) => this.props.history?.push(value)}
             onSearch={(value) => this.setState({ search: value })}
             onRefresh={(value) => this.loadDirectory(value)}
+            onUpload={() => this.setState({ openFU: true })}
           />
         }
+        onDragEnter={() => this.setState({ openFU: true })}
       >
         {loading ? (
           <Skeleton items={4} />
@@ -201,6 +211,13 @@ export default class MainView extends Component<Props, State> {
           onClose={() => this.setState({ openFP: false })}
           onDownload={(value) => this.downloadFile(value)}
           onNavigate={(value) => this.navigateFiles(value)}
+        />
+
+        <Uploader
+          directory={directory}
+          open={openFU}
+          onClose={() => this.setState({ openFU: false })}
+          onUploaded={(value) => this.onUploaded(value)}
         />
 
         <Alert options={alert} onClose={() => this.setState({ alert: { show: false } })} />

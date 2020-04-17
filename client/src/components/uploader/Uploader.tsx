@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core/styles'
 import { WithStyles } from '@material-ui/core/styles'
 import { Theme } from '@material-ui/core/styles'
 import Dialog from '@material-ui/core/Dialog'
-import Zoom from '@material-ui/core/Zoom'
+import Slide from '@material-ui/core/Slide'
 import Grid from '@material-ui/core/Grid'
 import Dropzone from 'react-dropzone'
 import Typography from '@material-ui/core/Typography'
@@ -65,22 +65,23 @@ class FileUploadComponent extends Component<Props, State> {
         disableEscapeKeyDown
         fullScreen
       >
-        <div className={classes.root}>
-          <AppBar position="fixed">
-            <Toolbar>
-              <Typography variant="h6" className={classes.title}>
-                Upload
-              </Typography>
-              <IconButton
-                disabled={this.state.loading}
-                onClick={() => this.close()}
-                className={classes.toolBtn}
-              >
-                <CloseIcon />
-              </IconButton>
-            </Toolbar>
-          </AppBar>
-          <Zoom in={this.props.open} mountOnEnter unmountOnExit>
+        <Slide in={this.props.open} direction="up" mountOnEnter unmountOnExit>
+          <div className={classes.root}>
+            <AppBar position="fixed">
+              <Toolbar>
+                <Typography variant="h6" className={classes.title}>
+                  Upload
+                </Typography>
+                <IconButton
+                  disabled={this.state.loading}
+                  onClick={() => this.close()}
+                  className={classes.toolBtn}
+                >
+                  <CloseIcon />
+                </IconButton>
+              </Toolbar>
+            </AppBar>
+
             <div className={classes.container}>
               <Dropzone onDrop={(files) => this.onDrop(files)}>
                 {({ getRootProps, getInputProps }) => (
@@ -119,8 +120,8 @@ class FileUploadComponent extends Component<Props, State> {
                 )}
               </Dropzone>
             </div>
-          </Zoom>
-        </div>
+          </div>
+        </Slide>
       </Dialog>
     )
   }

@@ -1,6 +1,7 @@
 import React from 'react'
 import { History } from 'history'
 import { Component } from 'react'
+import { Hidden } from '@material-ui/core'
 import { Color as AlertType } from '@material-ui/lab/Alert'
 import { Panel } from '../../components'
 import { Preview } from '../../components'
@@ -9,6 +10,8 @@ import { Viewer } from '../../components'
 import { Alert, AlertOptions } from '../../components'
 import { Skeleton } from '../../components'
 import { Uploader } from '../../components'
+import { FolderForm } from '../../components'
+import { Fab } from '../../components'
 import { AppModel } from '../../models'
 import { DirectoryModel } from '../../models'
 import { FileModel } from '../../models'
@@ -41,6 +44,8 @@ interface State {
   openFU: boolean
   // File preview
   openFP: boolean
+  //folder form
+  openFF: boolean
   //alert
   alert: AlertOptions
 }
@@ -59,6 +64,7 @@ export default class MainView extends Component<Props, State> {
     file: {},
     openFU: false,
     openFP: false,
+    openFF: false,
     alert: {},
   }
 
@@ -97,6 +103,7 @@ export default class MainView extends Component<Props, State> {
 
   public addFolder(directory: string): void {
     const service: FolderService = new FolderService()
+    directory = `${this.state.directory}/${directory}`
     service
       .create(directory)
       .then((dir: string) => {
@@ -171,7 +178,8 @@ export default class MainView extends Component<Props, State> {
 
   public render() {
     const { app, loading, directory, search, folders } = this.state
-    const { view, alert, files, openFP, openFU, file } = this.state
+    const { view, alert, files, file } = this.state
+    const { openFP, openFU, openFF } = this.state
     return (
       <Panel
         header={
@@ -185,6 +193,7 @@ export default class MainView extends Component<Props, State> {
             onSearch={(value) => this.setState({ search: value })}
             onRefresh={(value) => this.loadDirectory(value)}
             onUpload={() => this.setState({ openFU: true })}
+            onCreateFolder={() => this.setState({ openFF: true })}
           />
         }
         onDragEnter={() => this.setState({ openFU: true })}
@@ -219,6 +228,19 @@ export default class MainView extends Component<Props, State> {
           onClose={() => this.setState({ openFU: false })}
           onUploaded={(value) => this.onUploaded(value)}
         />
+
+        <FolderForm
+          open={openFF}
+          onClose={() => this.setState({ openFF: false })}
+          onSubmit={(value) => this.addFolder(value)}
+        />
+
+        <Hidden smUp>
+          <Fab
+            onCreate={() => this.setState({ openFF: true })}
+            onUpload={() => this.setState({ openFU: true })}
+          />
+        </Hidden>
 
         <Alert options={alert} onClose={() => this.setState({ alert: { show: false } })} />
       </Panel>

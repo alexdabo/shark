@@ -11,3 +11,5 @@ export { default as Preview } from './preview/Preview'
 export { default as Uploader } from './uploader/Uploader'
 export { default as Viewer } from './viewer/Viewer'
 export { default as Skeleton } from './skeleton/Skeleton'
+
+export { default as FolderForm } from './forms/FolderForm'

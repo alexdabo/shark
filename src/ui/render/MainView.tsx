@@ -1,8 +1,9 @@
 import * as React from 'react'
-import { Component } from 'react'
 import * as fs from 'fs'
 import * as ps from 'portscanner'
 import * as path from 'path'
+import * as isDev from 'electron-is-dev'
+import { Component } from 'react'
 import { shell } from 'electron'
 import Server from '../../server/Server'
 import Layout from './components/Layout'
@@ -47,7 +48,7 @@ export default class MainView extends Component<Props, State> {
       port: this.state.port,
       home: this.state.path,
       client: path.join(__dirname, '../../../client/build'),
-      mode: 'default',
+      mode: isDev ? 'default' : 'history',
       onListening: (domain) => {
         this.setState({ serverActive: true, serverWaiting: false })
         this.showAlert('success', `Open your web browser at: ${domain}`)

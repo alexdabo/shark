@@ -8,7 +8,7 @@ class AppTest extends Server {
   constructor() {
     super()
     process.env.DOMAIN = 'http://localhost:8000'
-    process.env.HOME = os.homedir()
+    process.env.HOME = os.homedir().replace(/[\\]/g, '/')
   }
   app(): Application {
     return this.expressServer(process.env.HOME, path.join(__dirname, '../../../public'), 'default')

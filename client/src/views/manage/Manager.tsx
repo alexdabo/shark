@@ -51,6 +51,9 @@ interface State {
 }
 
 export default class MainView extends Component<Props, State> {
+  /*****************************************************************
+   *                             State                             *
+   *****************************************************************/
   public state: State = {
     //@ts-ignore
     app: {},
@@ -67,7 +70,9 @@ export default class MainView extends Component<Props, State> {
     openFF: false,
     alert: {},
   }
-
+  /*****************************************************************
+   *                          Constructor                          *
+   *****************************************************************/
   constructor(props: Props) {
     super(props)
     this.props.history?.listen((location) => {
@@ -75,7 +80,9 @@ export default class MainView extends Component<Props, State> {
     })
   }
 
-  // Services
+  /*****************************************************************
+   *                           Services                            *
+   *****************************************************************/
   private async loadAppInfo(): Promise<void> {
     const service: AppService = new AppService()
     await service.getApp().then((app: AppModel) => {
@@ -147,8 +154,9 @@ export default class MainView extends Component<Props, State> {
     const service: FileService = new FileService()
     service.download(url).catch(() => this.alert('error', 'Failed to download folder.'))
   }
-
-  // Methods
+  /*****************************************************************
+   *                           Methods                             *
+   *****************************************************************/
 
   private alert(type: AlertType, message: string, persistent?: boolean, loading?: boolean): void {
     this.setState({ alert: { show: true, type, message, persistent, loading } })
@@ -169,7 +177,9 @@ export default class MainView extends Component<Props, State> {
     }
   }
 
-  // React
+  /*****************************************************************
+   *                             React                             *
+   *****************************************************************/
 
   public componentDidMount(): void {
     this.loadAppInfo()

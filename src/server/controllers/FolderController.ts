@@ -17,6 +17,7 @@ router.use('/', (req: Request, res: Response, next: NextFunction) => {
 
 // methods
 router.get('/', async (req: Request, res: Response) => {
+  //@ts-ignore
   const query: { path: string } = req.query
 
   res.send({
@@ -27,6 +28,7 @@ router.get('/', async (req: Request, res: Response) => {
 })
 
 router.get('/download', async (req: Request, res: Response) => {
+  //@ts-ignore
   const query: { path: string } = req.query
 
   try {

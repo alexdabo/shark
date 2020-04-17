@@ -5,6 +5,7 @@ import * as path from 'path'
 import dir from '../../utils/Directory'
 
 export default function DirectoryMiddleware(req: Request, res: Response, next: NextFunction) {
+  //@ts-ignore
   const queryPath: string = req.query.path
   const bodyPath: string = req.body.path
   const bodyName: string = req.body.name

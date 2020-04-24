@@ -52,6 +52,10 @@ export default class MainView extends Component<Props, State> {
       onListening: (domain) => {
         this.setState({ serverActive: true, serverWaiting: false })
         this.showAlert('success', `Open your web browser at: ${domain}`)
+        console.log(`Server listening at: 
+        DOMAIN: ${domain}
+        HOME:   ${process.env.HOMEDIR}
+      `)
       },
       onError: (err) => {
         this.showAlert(
@@ -70,6 +74,7 @@ export default class MainView extends Component<Props, State> {
       () => {
         this.setState({ serverActive: false, serverWaiting: false })
         this.hideAlert()
+        console.log('Server stopped')
       }
     )
   }

@@ -12,7 +12,7 @@ export default function FileMiddleware(req: Request, res: Response, next: NextFu
       if (bodyPath) {
         const directory = decodeURI(
           dir.format(
-            path.join(process.env.HOME, bodyPath.replace(`${process.env.DOMAIN}/public`, ''))
+            path.join(process.env.HOMEDIR, bodyPath.replace(`${process.env.DOMAIN}/public`, ''))
           )
         )
         if (fs.existsSync(directory)) {

@@ -4,20 +4,20 @@ import { address } from 'ip'
 import Server from '../server/Server'
 
 const server: Server = new Server()
-const doamin: string = `http://${address()}:8000`
+const domain: string = `http://${address()}:8000`
 
 describe('Server', () => {
   it('Start server', (done) => {
     server.start({
-      port: Number(doamin.split(':').pop()),
+      port: Number(domain.split(':').pop()),
       home: path.join(__dirname, '../../public'),
       client: path.join(__dirname, '../../public'),
       mode: 'default',
-      onListening: (domain) => {
+      onListening: (listeningAt) => {
         // Server should be listening
         expect(server.isListening()).to.equal(true)
         // Server should return a domain.
-        expect(domain).to.eql(doamin)
+        expect(listeningAt).to.eql(domain)
       },
       onError: () => {},
     })

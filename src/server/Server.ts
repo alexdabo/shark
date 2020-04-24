@@ -90,6 +90,6 @@ export default class Server {
   }
 
   private setHome(home?: string) {
-    process.env.HOME = home ? dir.format(home) : undefined
+    process.env.HOMEDIR = home ? dir.format(home) : undefined
   }
 }

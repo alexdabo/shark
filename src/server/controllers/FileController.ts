@@ -18,7 +18,7 @@ router.use('/', (req: Request, res: Response, next: NextFunction) => {
 router.post('/', (req: Request, res: Response) => {
   var storage = multer.diskStorage({
     destination: function (req, file, callback) {
-      const destination: string = path.join(process.env.HOME, req.query.path || req.body.path)
+      const destination: string = path.join(process.env.HOMEDIR, req.query.path || req.body.path)
       req.body.destination = destination
       callback(null, destination)
     },

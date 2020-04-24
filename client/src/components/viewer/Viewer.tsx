@@ -104,7 +104,6 @@ class Viewer extends Component<Props, State> {
                   item
                   xs
                 >
-                  
                   <Tooltip enterDelay={1000} title={`${folder.split('/').pop()}`}>
                     <Typography noWrap>{folder.split('/').pop()}</Typography>
                   </Tooltip>

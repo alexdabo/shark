@@ -29,8 +29,8 @@ describe('FolderController', () => {
   })
 
   it('GET     =>  /api/folder', (done) => {
-    const folderTest: string = path.join(process.env.HOME, '/shark-test/folder-test')
-    const fileTest: string = path.join(process.env.HOME, '/shark-test/file-test.txt')
+    const folderTest: string = path.join(process.env.HOMEDIR, '/shark-test/folder-test')
+    const fileTest: string = path.join(process.env.HOMEDIR, '/shark-test/file-test.txt')
     fs.appendFileSync(fileTest, 'Hello content!')
     fs.mkdirSync(folderTest)
 

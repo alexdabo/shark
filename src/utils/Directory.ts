@@ -15,7 +15,7 @@ const fileProps = (directory: string): FileModel => {
   const fileStat: fs.Stats = fs.statSync(directory)
 
   return {
-    url: encodeURI(directory.replace(process.env.HOME, `${process.env.DOMAIN}/public`)),
+    url: encodeURI(directory.replace(process.env.HOMEDIR, `${process.env.DOMAIN}/public`)),
     icon: '',
     name: path.basename(directory),
     mine: mt.contentType(path.extname(directory)) || undefined,
@@ -69,7 +69,7 @@ export default {
     } catch (error) {
       throw error
     }
-    return destination.replace(process.env.HOME, '')
+    return destination.replace(process.env.HOMEDIR, '')
   },
 
   move: (origin: string, destination: string): string => {
@@ -119,7 +119,14 @@ export default {
       .filter((file) => file.isFile() && !/(^|\/)\.[^\/\.]/g.test(file.name))
       .map((file): FileModel => fileProps(path.join(directory, file.name)))
 
-    return await new FileIconRepository().findForAll(files)
+    try {
+      files = await new FileIconRepository().findForAll(files)
+    } catch (error) {
+      console.log('ERR DIR:', error)
+      throw error
+    }
+
+    return files
   },
 
   readFolders: (directory: string): string[] => {
@@ -128,8 +135,8 @@ export default {
     folders = fs
       .readdirSync(directory, { withFileTypes: true })
       .filter((folder) => folder.isDirectory() && !/(^|\/)\.[^\/\.]/g.test(folder.name))
-      .map((folder) => path.join(directory, folder.name).replace(process.env.HOME, ''))
-      .map((folder) => dir.format(folder).replace(process.env.HOME, ''))
+      .map((folder) => path.join(directory, folder.name).replace(process.env.HOMEDIR, ''))
+      .map((folder) => dir.format(folder).replace(process.env.HOMEDIR, ''))
     return folders
   },
 }

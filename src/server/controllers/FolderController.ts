@@ -1,9 +1,9 @@
 import * as express from 'express'
 import * as path from 'path'
+import * as os from 'os'
 import { Request } from 'express'
 import { Response } from 'express'
 import { NextFunction } from 'express'
-import * as os from 'os'
 import middleware from '../middlewares/FolderMiddleware'
 import dir from '../../utils/Directory'
 import FileModel from '../../models/FileModel'
@@ -19,12 +19,15 @@ router.use('/', (req: Request, res: Response, next: NextFunction) => {
 router.get('/', async (req: Request, res: Response) => {
   //@ts-ignore
   const query: { path: string } = req.query
-
-  res.send({
-    path: query.path.replace(process.env.HOME, ''),
-    folders: dir.readFolders(query.path),
-    files: await dir.readFiles(query.path),
-  })
+  try {
+    res.send({
+      path: query.path.replace(process.env.HOMEDIR, ''),
+      folders: dir.readFolders(query.path),
+      files: await dir.readFiles(query.path),
+    })
+  } catch (error) {
+    res.status(500).send({ code: error.code })
+  }
 })
 
 router.get('/download', async (req: Request, res: Response) => {
@@ -45,7 +48,7 @@ router.post('/', (req: Request, res: Response) => {
 
   try {
     const created: FileModel = {
-      url: dir.createFolder(body.path).replace(process.env.HOME, ''),
+      url: dir.createFolder(body.path).replace(process.env.HOMEDIR, ''),
     }
     res.send(created)
   } catch (error) {

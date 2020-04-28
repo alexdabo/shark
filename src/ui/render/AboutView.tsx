@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { shell } from 'electron'
+import i18n from '../locales/AboutViewI18n'
 import App from '../../utils/AppInfo'
 
 export default class About extends React.Component {
@@ -23,10 +24,12 @@ export default class About extends React.Component {
               <span style={{ fontWeight: 'bold' }}>{this.app.name}</span>
             </div>
             <div>
-              <span>version {this.app.version}</span>
+              <span>
+                {i18n.t('version')} {this.app.version}
+              </span>
             </div>
             <div>
-              <span>{this.app.description}</span>
+              <span>{i18n.t('description')}</span>
             </div>
             <div style={style.copyright}>
               <span>{this.app.copyright}</span>
@@ -38,7 +41,7 @@ export default class About extends React.Component {
           onClick={() => this.redirect()}
         >
           <div style={style.link}>
-            <span>Report issues </span>
+            <span>{i18n.t('issues')} </span>
           </div>
         </div>
       </div>

@@ -13,6 +13,7 @@ import Icon from './components/Icon'
 import Alert, { AlertType } from './components/Alert'
 import ConfigRepository from '../../repositories/ConfigRepository'
 import { ConfigModel } from '../../models/DBModel'
+import i18n from '../locales/MainViewI18n'
 
 interface Props {}
 
@@ -51,8 +52,9 @@ export default class MainView extends Component<Props, State> {
       mode: isDev ? 'default' : 'history',
       onListening: (domain) => {
         this.setState({ serverActive: true, serverWaiting: false })
-        this.showAlert('success', `Open your web browser at: ${domain}`)
-        console.log(`Server listening at: 
+        this.showAlert('success', i18n.t('openBrowser', { domain }).replace(/&#x2F;/g, '/'))
+
+        console.log(`${i18n.t('serverListeningAt')}
         DOMAIN: ${domain}
         HOME:   ${process.env.HOMEDIR}
       `)
@@ -60,7 +62,7 @@ export default class MainView extends Component<Props, State> {
       onError: (err) => {
         this.showAlert(
           'danger',
-          err.message.replace('0.0.0.0', this.server.ip()) || 'Error starting server',
+          err.message.replace('0.0.0.0', this.server.ip()) || i18n.t('serverErrorStarting'),
           6000
         )
         this.setState({ serverActive: false, serverWaiting: false })
@@ -74,7 +76,7 @@ export default class MainView extends Component<Props, State> {
       () => {
         this.setState({ serverActive: false, serverWaiting: false })
         this.hideAlert()
-        console.log('Server stopped')
+        console.log(i18n.t('serverStopped'))
       }
     )
   }
@@ -87,11 +89,14 @@ export default class MainView extends Component<Props, State> {
     let errors: number = 0
     this.hideAlert()
     if (!fs.existsSync(this.state.path)) {
-      this.showAlert('warning', `Does not exist "${this.state.path}".`)
+      this.showAlert(
+        'warning',
+        i18n.t('notExist', { dir: this.state.path }).replace(/&#x2F;/g, '/')
+      )
       errors += 1
     }
     if ((await ps.checkPortStatus(this.state.port, '127.0.0.1')) === 'open') {
-      this.showAlert('warning', `Port "${this.state.port}" in use.`)
+      this.showAlert('warning', i18n.t('portInUse', { port: this.state.port }))
       errors += 1
     }
 
@@ -108,13 +113,17 @@ export default class MainView extends Component<Props, State> {
   private hideAlert(): void {
     this.setState({ alertShow: false })
     if (this.server.isListening())
-      this.showAlert('success', `Open your web browser at: ${this.server.domain()}`)
+      this.showAlert(
+        'success',
+        i18n.t('openBrowser', { domain: this.server.domain() }).replace(/&#x2F;/g, '/')
+      )
   }
   /*****************************************************************
    *                            Events                             *
    *****************************************************************/
   private async onStartStopServer(): Promise<void> {
     this.setState({ serverWaiting: true })
+
     if (!this.server.isListening()) {
       if (await this.isValid()) {
         this.startServer()
@@ -133,7 +142,7 @@ export default class MainView extends Component<Props, State> {
         path: this.state.path,
         port: Number(this.state.port),
       })
-      this.showAlert('success', 'Changes saved', 3000)
+      this.showAlert('success', i18n.t('saved'), 3000)
     }
   }
 
@@ -168,7 +177,7 @@ export default class MainView extends Component<Props, State> {
                     role="status"
                     aria-hidden="true"
                   />
-                  <span>{this.state.serverActive ? 'Stopping' : 'Starting'}</span>
+                  <span>{this.state.serverActive ? i18n.t('stopping') : i18n.t('starting')}</span>
                 </span>
               ) : this.state.serverActive ? (
                 <Icon name="StopFill" color="#ffffff" />
@@ -185,7 +194,7 @@ export default class MainView extends Component<Props, State> {
               disabled={this.state.serverActive}
               color="primary"
             >
-              <span>Save</span>
+              <span>{i18n.t('save')}</span>
             </Button>
           </div>
         }
@@ -195,7 +204,7 @@ export default class MainView extends Component<Props, State> {
             onChange={(value) => this.setState({ path: value })}
             disabled={this.state.serverActive}
             value={this.state.path}
-            label="Directory"
+            label={i18n.t('directory')}
           />
 
           <TextField
@@ -203,7 +212,7 @@ export default class MainView extends Component<Props, State> {
             disabled={this.state.serverActive}
             value={this.state.port || 8000}
             type="number"
-            label="Port"
+            label={i18n.t('port')}
             min={0}
             max={65536}
           />

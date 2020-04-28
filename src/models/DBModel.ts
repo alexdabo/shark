@@ -9,6 +9,7 @@ export interface FileIconModel {
 }
 
 export interface ConfigModel {
-  path: string
-  port: number
+  path?: string
+  port?: number
+  lang?: string
 }

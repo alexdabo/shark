@@ -1,17 +1,17 @@
+import { lang } from './configs/app.config'
+lang()
 import { app } from 'electron'
+import { ipcMain } from 'electron'
+import { dialog } from 'electron'
 import * as path from 'path'
 import * as os from 'os'
 import * as fs from 'fs'
-import MainWindow, { Menu } from './ui/windows/MainWindow'
+import MainWindow from './ui/windows/MainWindow'
 
 let mainWindow: Electron.BrowserWindow
 
 function createWindow() {
-  // Create the browser window.
-  mainWindow = MainWindow()
-
-  // set menu
-  app.applicationMenu = Menu(app, mainWindow)
+  mainWindow = MainWindow(app)
 }
 
 // This method will be called when Electron has finished
@@ -34,6 +34,12 @@ app.on('activate', () => {
   if (mainWindow === null) {
     createWindow()
   }
+})
+
+// Change language
+ipcMain.on('changeLang', () => {
+  app.relaunch()
+  app.quit()
 })
 
 // Create tmp folder

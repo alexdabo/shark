@@ -1,4 +1,5 @@
 import React from 'react'
+import i18n from '../../i18n'
 import { ListItem } from '@material-ui/core'
 import { ListItemIcon } from '@material-ui/core'
 import { ListItemText } from '@material-ui/core'
@@ -51,7 +52,7 @@ export default (props: Props): JSX.Element => {
           onClick={() => (props.onClick ? onClick() : null)}
         >
           <ListItemIcon className={classes.confirm}>{icon}</ListItemIcon>
-          <ListItemText className={classes.confirm} primary="Click to confirm" />
+          <ListItemText className={classes.confirm} primary={i18n.t('simple.confirm')} />
         </ListItem>
       )}
     </div>

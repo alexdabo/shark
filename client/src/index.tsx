@@ -1,13 +1,13 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import ReactDOM from 'react-dom'
-import './assets/style.sass'
 import App from './views/App'
 import * as serviceWorker from './serviceWorker'
+import './assets/style.sass'
 
 ReactDOM.render(
-  <React.StrictMode>
+  <Suspense fallback={<div>Loading</div>}>
     <App />
-  </React.StrictMode>,
+  </Suspense>,
   document.getElementById('root')
 )
 

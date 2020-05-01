@@ -15,7 +15,7 @@ describe('<Navigation/>', () => {
   })
 
   it('Should return search string', (done) => {
-    const { getByPlaceholderText } = render(
+    const { getByTestId } = render(
       <Navigation
         directory=""
         hostname=""
@@ -28,7 +28,7 @@ describe('<Navigation/>', () => {
       />
     )
 
-    fireEvent.input(getByPlaceholderText('Search...'), { target: { value: 'my folder' } })
+    fireEvent.input(getByTestId('search'), { target: { value: 'my folder' } })
   })
 
   it('Should clean search string', (done) => {

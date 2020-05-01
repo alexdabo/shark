@@ -1,4 +1,5 @@
 import React from 'react'
+import i18n from '../../i18n'
 import { History } from 'history'
 import { Component } from 'react'
 import { Hidden } from '@material-ui/core'
@@ -102,7 +103,7 @@ export default class MainView extends Component<Props, State> {
           files: directory.files,
         })
       })
-      .catch(() => this.alert('error', 'Error loading data.'))
+      .catch(() => this.alert('error', i18n.t('error.loadingData')))
       .finally(() => {
         this.setState({ loading: false })
       })
@@ -118,7 +119,7 @@ export default class MainView extends Component<Props, State> {
         folders.push(dir)
         this.setState({ folders })
       })
-      .catch(() => this.alert('error', 'Error creating folder.'))
+      .catch(() => this.alert('error', i18n.t('error.creatingFolder')))
   }
 
   public deleteFile(file: FileModel): void {
@@ -131,7 +132,7 @@ export default class MainView extends Component<Props, State> {
         files.splice(index, 1)
         this.setState({ files })
       })
-      .catch(() => this.alert('error', 'Failed to delete file.'))
+      .catch(() => this.alert('error', i18n.t('error.deleteFile')))
   }
 
   public deleteFolder(directory: string): void {
@@ -140,10 +141,10 @@ export default class MainView extends Component<Props, State> {
 
   public downloadFolder(directory: string): void {
     const service: FolderService = new FolderService()
-    this.alert('info', `Ziping folder "${directory.split('/').pop()}"`, true, true)
+    this.alert('info', i18n.t('info.compressing', { name: directory.split('/').pop() }), true, true)
     service
       .download(directory)
-      .catch(() => this.alert('error', 'Failed to download folder.'))
+      .catch(() => this.alert('error', i18n.t('error.downloadFolder')))
 
       .finally(() => {
         this.setState({ alert: { show: false } })
@@ -152,7 +153,7 @@ export default class MainView extends Component<Props, State> {
 
   public downloadFile(url: string): void {
     const service: FileService = new FileService()
-    service.download(url).catch(() => this.alert('error', 'Failed to download folder.'))
+    service.download(url).catch(() => this.alert('error', i18n.t('error.downloadFile')))
   }
   /*****************************************************************
    *                           Methods                             *

@@ -10,6 +10,22 @@ export default (theme: Theme) => ({
     marginTop: 4,
   },
 
+  // empty
+  emptyContainer: {
+    height: '100%',
+    display: 'flex',
+    alignItems: 'center',
+  },
+  emptyContent: {
+    margin: 'auto',
+    color: '#dce0e6',
+  },
+  emptyImage: {
+    width: 120,
+    height: 120,
+    margin: theme.spacing(1),
+  },
+
   // grid view
   gridView: {
     width: 'calc(100vw + 3px)',

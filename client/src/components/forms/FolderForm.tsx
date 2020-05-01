@@ -1,4 +1,5 @@
 import React from 'react'
+import i18n from '../../i18n'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
@@ -26,7 +27,7 @@ export default (props: Props): JSX.Element => {
   return (
     <Dialog onClose={props.onClose} open={open} disableBackdropClick disableEscapeKeyDown>
       <form onSubmit={onSubmit}>
-        <DialogTitle>New folder</DialogTitle>
+        <DialogTitle>{i18n.t('simple.newFolder')}</DialogTitle>
         <DialogContent>
           <TextField
             data-testid="name-input"
@@ -34,17 +35,17 @@ export default (props: Props): JSX.Element => {
             onChange={(event) => setName(event.target.value)}
             autoFocus
             margin="dense"
-            label="Name"
+            label={i18n.t('simple.name')}
             type="text"
             fullWidth
           />
         </DialogContent>
         <DialogActions>
           <Button data-testid="cancel-btn" onClick={props.onClose} color="primary">
-            Cancel
+            {i18n.t('simple.cancel')}
           </Button>
           <Button data-testid="submit-btn" type="submit" color="primary">
-            Create
+            {i18n.t('simple.create')}
           </Button>
         </DialogActions>
       </form>

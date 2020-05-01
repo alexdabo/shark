@@ -1,5 +1,4 @@
 import * as i18n from 'i18next'
-import { initReactI18next } from 'react-i18next'
 const resources = {
   en: {
     translation: {
@@ -38,7 +37,6 @@ const resources = {
 // initialize i18next with catalog and language to use
 i18n
   //@ts-ignore
-  .use(initReactI18next)
   .init({
     resources,
     lng: process.env.APP_LANG,

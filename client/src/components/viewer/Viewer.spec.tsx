@@ -9,20 +9,30 @@ import { files } from '../../test'
 describe('<Viewer/>', () => {
   afterEach(cleanup)
 
-  it('Should render correctly in table view', (done) => {
+  it('Should render correctly folder is empty', (done) => {
     const { getByTestId } = render(<Viewer view="list" folders={[]} files={[]} search=""></Viewer>)
+    expect(getByTestId('folderIsEmpty')).toBeInTheDocument
+    done()
+  })
+
+  it('Should render correctly in table view', (done) => {
+    const { getByTestId } = render(
+      <Viewer view="list" folders={folders} files={[]} search=""></Viewer>
+    )
     const tableBody = getByTestId('table-body')
     expect(tableBody).toBeInTheDocument
-    expect(tableBody.children.length).toBe(0)
+    expect(tableBody.children.length).toBe(3)
     done()
   })
 
   it('Should render correctly in grid view', (done) => {
-    const { getByTestId } = render(<Viewer view="grid" folders={[]} files={[]} search=""></Viewer>)
+    const { getByTestId } = render(
+      <Viewer view="grid" folders={folders} files={[]} search=""></Viewer>
+    )
     const grid = getByTestId('grid')
     expect(grid).toBeInTheDocument
-    // Should be 1 because there is a separator between folders and files
-    expect(grid.children.length).toBe(1)
+    // Should be 4 because there is a separator between folders and files
+    expect(grid.children.length).toBe(4)
     done()
   })
 })

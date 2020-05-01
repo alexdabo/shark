@@ -1,4 +1,5 @@
 import React from 'react'
+import i18n from '../../i18n'
 import { Hidden } from '@material-ui/core'
 import { IconButton } from '@material-ui/core'
 import { CardHeader } from '@material-ui/core'
@@ -9,6 +10,7 @@ import { Toolbar } from '@material-ui/core'
 import { Box } from '@material-ui/core'
 import { Breadcrumbs } from '@material-ui/core'
 import { Link } from '@material-ui/core'
+import { Tooltip } from '@material-ui/core'
 import { InputBase } from '@material-ui/core'
 import SearchIcon from '@material-ui/icons/Search'
 import HomeIcon from '@material-ui/icons/Home'
@@ -81,8 +83,8 @@ export default (props: Props): JSX.Element => {
                   onChange={(event) => (props.onSearch ? props.onSearch(event.target.value) : null)}
                   value={search}
                   className={classes.searchInput}
-                  placeholder="Search..."
-                  inputProps={{ 'aria-label': 'search google maps' }}
+                  placeholder={i18n.t('simple.search')}
+                  inputProps={{ 'aria-label': 'search google maps', 'data-testid': 'search' }}
                 />
                 {search.length === 0 ? (
                   <SearchIcon />
@@ -97,39 +99,49 @@ export default (props: Props): JSX.Element => {
             <Hidden xsDown>
               <Grid item>
                 {view === 'list' ? (
-                  <IconButton
-                    onClick={() => (props.onChangeView ? props.onChangeView('grid') : null)}
-                    className={classes.iconBtn}
-                  >
-                    <GridIcon />
-                  </IconButton>
+                  <Tooltip enterDelay={1000} title={`${i18n.t('simple.gridView')}`}>
+                    <IconButton
+                      onClick={() => (props.onChangeView ? props.onChangeView('grid') : null)}
+                      className={classes.iconBtn}
+                    >
+                      <GridIcon />
+                    </IconButton>
+                  </Tooltip>
                 ) : (
-                  <IconButton
-                    onClick={() => (props.onChangeView ? props.onChangeView('list') : null)}
-                    className={classes.iconBtn}
-                  >
-                    <ListIcon />
-                  </IconButton>
+                  <Tooltip enterDelay={1000} title={`${i18n.t('simple.listView')}`}>
+                    <IconButton
+                      onClick={() => (props.onChangeView ? props.onChangeView('list') : null)}
+                      className={classes.iconBtn}
+                    >
+                      <ListIcon />
+                    </IconButton>
+                  </Tooltip>
                 )}
 
                 {props.onUpload ? (
-                  <IconButton onClick={props.onUpload} className={classes.iconBtn}>
-                    <UploadIcon />
-                  </IconButton>
+                  <Tooltip enterDelay={1000} title={`${i18n.t('simple.upload')}`}>
+                    <IconButton onClick={props.onUpload} className={classes.iconBtn}>
+                      <UploadIcon />
+                    </IconButton>
+                  </Tooltip>
                 ) : null}
 
                 {props.onCreateFolder ? (
-                  <IconButton onClick={props.onCreateFolder} className={classes.iconBtn}>
-                    <FolderIcon />
-                  </IconButton>
+                  <Tooltip enterDelay={1000} title={`${i18n.t('simple.newFolder')}`}>
+                    <IconButton onClick={props.onCreateFolder} className={classes.iconBtn}>
+                      <FolderIcon />
+                    </IconButton>
+                  </Tooltip>
                 ) : null}
                 {props.onRefresh ? (
-                  <IconButton
-                    onClick={() => (props.onRefresh ? props.onRefresh(directory) : null)}
-                    className={classes.iconBtn}
-                  >
-                    <RefreshIcon />
-                  </IconButton>
+                  <Tooltip enterDelay={1000} title={`${i18n.t('simple.refresh')}`}>
+                    <IconButton
+                      onClick={() => (props.onRefresh ? props.onRefresh(directory) : null)}
+                      className={classes.iconBtn}
+                    >
+                      <RefreshIcon />
+                    </IconButton>
+                  </Tooltip>
                 ) : null}
               </Grid>
             </Hidden>
@@ -142,7 +154,7 @@ export default (props: Props): JSX.Element => {
               onClick={() => (props.onChangeDirectory ? props.onChangeDirectory('/') : null)}
               className={classes.link}
             >
-              <HomeIcon className={classes.icon} /> Home{' '}
+              <HomeIcon className={classes.icon} /> {i18n.t('simple.home')}
             </Link>
             {directories().map((directory: string) => (
               <Link

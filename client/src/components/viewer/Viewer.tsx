@@ -1,4 +1,5 @@
 import React from 'react'
+import i18n from '../../i18n'
 import { Component } from 'react'
 import { Fragment } from 'react'
 import { WithStyles } from '@material-ui/core'
@@ -75,6 +76,23 @@ class Viewer extends Component<Props, State> {
     this.setState({ openFI: false })
   }
 
+  private empty(): JSX.Element {
+    const { classes } = this.props
+    return (
+      <div data-testid="folderIsEmpty" className={classes.emptyContainer}>
+        <div className={classes.emptyContent}>
+          <Avatar
+            variant="square"
+            className={classes.emptyImage}
+            src={`${require('../../assets/empty.svg')}`}
+          />
+          <b>
+            <span>{i18n.t('msg.folderIsEmpty')}</span>
+          </b>
+        </div>
+      </div>
+    )
+  }
   private grid(folders: string[], files: FileModel[]): JSX.Element {
     const { classes } = this.props
     return (
@@ -237,11 +255,18 @@ class Viewer extends Component<Props, State> {
 
     const TableView = () => this.table(folders, files)
     const GridView = () => this.grid(folders, files)
+    const Empty = () => this.empty()
 
     return (
       <Fragment>
-        {view === 'grid' ? <GridView /> : null}
-        {view === 'list' ? <TableView /> : null}
+        {files.length + folders.length > 0 ? (
+          <>
+            {view === 'grid' ? <GridView /> : null}
+            {view === 'list' ? <TableView /> : null}
+          </>
+        ) : (
+          <Empty />
+        )}
         <Options
           title={selectedFolder.split('/').pop()}
           avatar={
@@ -255,7 +280,7 @@ class Viewer extends Component<Props, State> {
           onSelected={(eventName) => {
             this.onFolderOptionSelected(eventName)
           }}
-          items={[{ label: 'Download', name: 'download', icon: <DownloadIcon /> }]}
+          items={[{ label: i18n.t('simple.download'), name: 'download', icon: <DownloadIcon /> }]}
         />
 
         <Options
@@ -268,8 +293,8 @@ class Viewer extends Component<Props, State> {
             this.onFileOptionSelected(eventName)
           }}
           items={[
-            { label: 'Download', name: 'download', icon: <DownloadIcon /> },
-            { label: 'Delete', name: 'delete', icon: <DeleteIcon />, confirm: true },
+            { label: i18n.t('simple.download'), name: 'download', icon: <DownloadIcon /> },
+            { label: i18n.t('simple.delete'), name: 'delete', icon: <DeleteIcon />, confirm: true },
           ]}
         />
       </Fragment>

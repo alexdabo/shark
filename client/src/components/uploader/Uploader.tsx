@@ -1,4 +1,5 @@
 import React from 'react'
+import i18n from '../../i18n'
 import { Component } from 'react'
 import { withStyles } from '@material-ui/core/styles'
 import { WithStyles } from '@material-ui/core/styles'
@@ -70,7 +71,7 @@ class FileUploadComponent extends Component<Props, State> {
             <AppBar position="fixed">
               <Toolbar>
                 <Typography variant="h6" className={classes.title}>
-                  Upload
+                  {i18n.t('simple.upload')}
                 </Typography>
                 <IconButton
                   disabled={this.state.loading}
@@ -99,8 +100,8 @@ class FileUploadComponent extends Component<Props, State> {
                       >
                         <input {...getInputProps()} />
                         <UploadIcon style={{ fontSize: 60 }} />
-                        <p>Drag and drop files here to upload.</p>
-                        <b>Or click to select files</b>
+                        <p>{i18n.t('msg.dragAndDrop')}</p>
+                        <b>{i18n.t('msg.clickToSelect')}</b>
                       </div>
                     ) : (
                       <div className={classes.files} style={{ position: 'absolute' }}>

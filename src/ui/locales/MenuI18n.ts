@@ -30,6 +30,14 @@ const resources = {
         label: 'Help',
         about: 'About',
       },
+
+      dialog: {
+        ok: 'Ok',
+        cancel: 'Cancel',
+        confirm: 'Confirm',
+        serverListening: 'The server is up.',
+        areYouSure: 'Are you sure you want to quit?',
+      },
     },
   },
   es: {
@@ -61,6 +69,14 @@ const resources = {
       help: {
         label: 'Ayuda',
         about: 'Acerda de shark',
+      },
+
+      dialog: {
+        ok: 'Ok',
+        cancel: 'Cancelar',
+        confirm: 'Confirmar',
+        serverListening: 'El servidor está activo.',
+        areYouSure: '¿Estás seguro de que quieres salir?',
       },
     },
   },

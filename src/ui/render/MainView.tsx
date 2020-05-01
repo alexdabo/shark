@@ -1,3 +1,4 @@
+import { ipcRenderer } from 'electron'
 import * as React from 'react'
 import * as fs from 'fs'
 import * as ps from 'portscanner'
@@ -53,7 +54,7 @@ export default class MainView extends Component<Props, State> {
       onListening: (domain) => {
         this.setState({ serverActive: true, serverWaiting: false })
         this.showAlert('success', i18n.t('openBrowser', { domain }).replace(/&#x2F;/g, '/'))
-
+        ipcRenderer.send('serverStatusChange', true)
         console.log(`${i18n.t('serverListeningAt')}
         DOMAIN: ${domain}
         HOME:   ${process.env.HOMEDIR}
@@ -76,6 +77,7 @@ export default class MainView extends Component<Props, State> {
       () => {
         this.setState({ serverActive: false, serverWaiting: false })
         this.hideAlert()
+        ipcRenderer.send('serverStatusChange', false)
         console.log(i18n.t('serverStopped'))
       }
     )

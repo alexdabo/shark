@@ -7,8 +7,15 @@ import { Menu as menu } from 'electron'
 import { MenuItemConstructorOptions } from 'electron'
 import { language } from '../../configs/app.config'
 import i18n from '../locales/MenuI18n'
+import clI18n from '../locales/ChangeLangI18n'
 import AboutWindow from './AboutWindow'
 import ConfigRepository from '../../repositories/ConfigRepository'
+
+let serverIsListening: boolean = false
+
+ipcMain.on('serverStatusChange', (event, listening) => {
+  serverIsListening = listening
+})
 
 export default (app: App): BrowserWindow => {
   let window = new BrowserWindow({
@@ -33,6 +40,23 @@ export default (app: App): BrowserWindow => {
   // Emitted when the window is Launched
   window.once('ready-to-show', () => {
     window.show()
+  })
+
+  // Emitted when the window is close.
+  window.on('close', (event) => {
+    if (serverIsListening) {
+      const choice = dialog.showMessageBoxSync({
+        type: 'question',
+        title: i18n.t('dialog.confirm'),
+        message: i18n.t('dialog.serverListening'),
+        detail: i18n.t('dialog.areYouSure'),
+        buttons: [i18n.t('dialog.cancel'), i18n.t('dialog.ok')],
+      })
+
+      if (choice === 0) {
+        event.preventDefault()
+      }
+    }
   })
 
   // Emitted when the window is closed.
@@ -197,15 +221,8 @@ const Menu = (app: App, mainWindow: BrowserWindow): menu => {
 
 const updateLanguage = (lang: language) => {
   const repository: ConfigRepository = new ConfigRepository()
-
-  const options = {
-    type: 'info',
-    title: 'Relaunch',
-    message: 'Restart shark to apply changes?',
-    buttons: ['Cancel', 'Ok'],
-  }
   //@ts-ignore
-  dialog.showMessageBox(options, async (event: number) => {
+  dialog.showMessageBox(clI18n(lang), async (event: number) => {
     if (event === 1) {
       await repository.update({ lang })
       ipcMain.emit('changeLang', lang)

@@ -1,6 +1,6 @@
 import { lang } from './configs/app.config'
 lang()
-import { app } from 'electron'
+import { app, ipcRenderer } from 'electron'
 import { ipcMain } from 'electron'
 import { dialog } from 'electron'
 import * as path from 'path'

@@ -8,6 +8,7 @@
   "repository": "https://github.com/alexdabo/shark.git",
   "main": "build/electron.js",
   "scripts": {
+    "preinstall": "cd client && npm install",
     "start": "tsc && electron ./build/electron.js",
     "dev:electron": "tsc -w & electron ./build/electron.js",
     "dev:web": "npm start & cd client && npm start",
@@ -15,8 +16,8 @@
     "test:web": "cd client && npm run test",
     "test": "mocha && npm run test:web",
     "build:electron": "electron-builder",
-    "build:client": "cd client && yarn build",
-    "build": "tsc && yarn build:client && yarn build:electron",
+    "build:client": "cd client && npm run build",
+    "build": "tsc && npm run build:client && npm run build:electron",
     "format": "prettier --write \"{src/**/*,client/src/**/*}.{ts,tsx,css,json}\""
   },
   "keywords": [
@@ -96,5 +97,9 @@
     "directories": {
       "buildResources": "assets"
     }
+  },
+  "engines": {
+    "node": "14.17.2",
+    "npm": "6.14.13"
   }
 }
